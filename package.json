@@ -1,0 +1,32 @@
+{
+  "name": "fullstack",
+  "version": "1.0.0",
+  "description": "FullStack (SQL, Express, React, NodeJs)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec babel-node src/server.js"
+  },
+  "keywords": [
+    "ZiK",
+    "FullStack"
+  ],
+  "author": "ZiK",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.28.4",
+    "@babel/node": "^7.28.0",
+    "@babel/preset-env": "^7.28.3",
+    "@sequelize/mysql": "^7.0.0-alpha.46",
+    "body-parser": "^2.2.0",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10",
+    "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "mysql2": "^3.15.2",
+    "sequelize-cli": "^6.2.0"
+  }
+}
