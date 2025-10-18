@@ -82,19 +82,25 @@ let updateUserData = (data) => {
       } else {
         resolve();
       }
-      // await db.User.update(
-      //   {
-      //     firstName: data.firstName,
-      //     lastName: data.lastName,
-      //     address: data.address,
-      //     phoneNumber: data.phoneNumber,
-      //     gender: data.gender,
-      //     roleId: data.roleId,
-      //   },
-      //   {
-      //     where: { id: data.id },
-      //   }
-      // );
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+let deleteUserById = (userId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await db.User.findOne({
+        where: { id: userId },
+      });
+      if (user) {
+        await user.destroy();
+      }
+      let users = await db.User.findAll({
+        raw: true, //lấy dữ liệu thuần (object JS)
+      });
+      resolve(users);
     } catch (error) {
       reject(error);
     }
@@ -113,10 +119,11 @@ let hashUserPassword = (password) => {
   });
 };
 
-module.exports = {
+export default {
   createNewUser,
   hashUserPassword,
   getAllUser,
   getUserId,
   updateUserData,
+  deleteUserById,
 };

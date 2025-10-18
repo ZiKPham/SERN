@@ -50,11 +50,24 @@ let putUser = async (req, res) => {
   });
 };
 
-module.exports = {
+let deleteUser = async (req, res) => {
+  let id = req.query.id;
+  if (id) {
+    let allUsers = await CRUDServices.deleteUserById(id);
+    return res.render("getAllUsers.ejs", {
+      dataUsers: allUsers,
+    });
+  } else {
+    return res.send("User not found");
+  }
+};
+
+export default {
   getHomePage,
   getCRUD,
   postCRUD,
   getAll,
   getEdit,
   putUser,
+  deleteUser,
 };
