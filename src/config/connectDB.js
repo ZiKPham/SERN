@@ -1,11 +1,14 @@
 import { Sequelize } from "@sequelize/core";
 import { MySqlDialect } from "@sequelize/mysql";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const sequelize = new Sequelize({
   dialect: MySqlDialect,
   database: "world",
   user: "root",
-  password: "Zikph@m0907",
+  password: process.env.PASSWORD,
   host: "localhost",
   port: 3306,
   logging: false,
