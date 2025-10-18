@@ -1,5 +1,8 @@
 import bcrypt from "bcrypt";
 import db from "../models/index";
+import { raw } from "body-parser";
+import e from "express";
+import { where } from "sequelize";
 const saltRounds = 10;
 
 let createNewUser = async (data) => {
@@ -26,19 +29,72 @@ let createNewUser = async (data) => {
 let getAllUser = async () => {
   return new Promise(async (resolve, reject) => {
     try {
-      let users = db.User.findAll({
-        // attributes: [
-        //   "email",
-        //   "firstName",
-        //   "lastName",
-        //   "address",
-        //   "phoneNumber",
-        //   "gender",
-        // ],
+      let users = await db.User.findAll({
         raw: true, //lấy dữ liệu thuần (object JS)
       });
 
       resolve(users);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+let getUserId = async (userId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let users = await db.User.findOne({
+        where: {
+          id: userId,
+        },
+        raw: true,
+      });
+      if (users) {
+        resolve(users);
+      } else {
+        resolve({});
+      }
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+let updateUserData = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await db.User.findOne({
+        where: { id: data.id },
+      });
+      if (user) {
+        user.firstName = data.firstName;
+        user.lastName = data.lastName;
+        user.address = data.address;
+        user.phoneNumber = data.phoneNumber;
+        user.gender = data.gender;
+        user.roleId = data.roleId;
+
+        await user.save();
+        let users = await db.User.findAll({
+          raw: true, //lấy dữ liệu thuần (object JS)
+        });
+        resolve(users);
+      } else {
+        resolve();
+      }
+      // await db.User.update(
+      //   {
+      //     firstName: data.firstName,
+      //     lastName: data.lastName,
+      //     address: data.address,
+      //     phoneNumber: data.phoneNumber,
+      //     gender: data.gender,
+      //     roleId: data.roleId,
+      //   },
+      //   {
+      //     where: { id: data.id },
+      //   }
+      // );
     } catch (error) {
       reject(error);
     }
@@ -61,4 +117,6 @@ module.exports = {
   createNewUser,
   hashUserPassword,
   getAllUser,
+  getUserId,
+  updateUserData,
 };

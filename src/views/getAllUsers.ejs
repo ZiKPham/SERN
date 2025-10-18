@@ -12,8 +12,8 @@
 
       td,
       th {
-        border: 1px solid #dddddd;
-        text-align: left;
+        text-align: center;
+        border: 1px solid #000000;
         padding: 8px;
       }
 
@@ -32,15 +32,21 @@
         <th>Last Name</th>
         <th>Address</th>
         <th>Gender</th>
+        <th>Actions</th>
       </tr>
-      <% for(let i=0; i < dataUsers.length; i++) { %>
+      <% for(let i = 0; i < dataUsers.length; i++) { %>
       <tr>
         <td><%= dataUsers[i].email %></td>
         <td><%= dataUsers[i].firstName %></td>
         <td><%= dataUsers[i].lastName %></td>
         <td><%= dataUsers[i].address %></td>
         <td>
-          <% if (dataUsers.gender) { %> Male <% } else { %> Female <% } %>
+          <% if (dataUsers[i].gender == 1) { %> Male <% } else { %> Female <% }
+          %>
+        </td>
+        <td>
+          <a href="/edit-crud?id=<%= dataUsers[i].id %>" type="button">Edit</a>
+          <a href="" type="button">Delete</a>
         </td>
       </tr>
       <% } %>

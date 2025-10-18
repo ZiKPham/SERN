@@ -30,9 +30,31 @@ let getAll = async (req, res) => {
   });
 };
 
+let getEdit = async (req, res) => {
+  let userId = req.query.id;
+  if (userId) {
+    let user = await CRUDServices.getUserId(userId);
+    return res.render("editUser.ejs", {
+      dataUser: user,
+    });
+  } else {
+    return res.send("User not found");
+  }
+};
+
+let putUser = async (req, res) => {
+  let data = req.body;
+  let allUsers = await CRUDServices.updateUserData(data);
+  return res.render("getAllUsers.ejs", {
+    dataUsers: allUsers,
+  });
+};
+
 module.exports = {
   getHomePage,
   getCRUD,
   postCRUD,
   getAll,
+  getEdit,
+  putUser,
 };
